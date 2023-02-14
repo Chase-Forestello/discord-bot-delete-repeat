@@ -1,3 +1,4 @@
+// need to run this with Node.js, check dependencies. Using Discord.js version 12.3.1
 const Discord = require("discord.js");
 const client = new Discord.Client({
   intents: Discord.Intents.ALL,
