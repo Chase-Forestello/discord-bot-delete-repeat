@@ -9,15 +9,15 @@ client.on("ready", () => {
 });
 
 client.on("message", (msg) => {
-  console.log("Message: " + msg.content);
+  // If the message is sent by anyone other than the bot and is not empty, contains an embed, or is not sent by the targeted users, return.
   if (
-    (msg.author.id === "USER ID HERE" || // If the message is sent by this user ID
-      msg.author.id === "USER ID HERE") && // Or if the message was sent by this user ID
+    msg.author.id === "TARGET_ID" && // If the message is sent by this user ID
     !msg.content.includes("http") && // If the message is not a link
-    msg.content != "" && // If the message is not empty
+    msg.content !== "" && // If the message is not empty
     !msg.embeds[0] && // If the message is not an embed
-    msg.author.id != "BOT ID HERE" // If the message is sent by the bot
+    msg.author.id !== "BOT_ID" // If the message is sent by the bot
   ) {
+    console.log("Message: " + msg.content);
     let savedMessage = msg.content;
     let letter_arr = savedMessage.split("");
     for (var i = 0; i < letter_arr.length; i += 2) {
@@ -25,21 +25,19 @@ client.on("message", (msg) => {
     }
     let newMessage = letter_arr.join("");
     console.log(`New message: ${newMessage}`);
-    msg
-      .delete()
-      .then(() => {
-        msg.channel.send(letter_arr.join(" ")).catch((error) => {
-          console.log(error);
-        });
-      })
-      .catch((error) => {
+    msg.delete().then(() => {
+      msg.channel.send(letter_arr.join(" ")).catch((error) => {
         console.log(error);
       });
+    });
+  } else if (msg.author.id === "BOT_ID") {
+    // console.log("Message is from the bot"); // This is just for debugging
+    return;
   } else {
     console.log(
-      "Error: The message is from the bot, is empty, contains an embed, or is not sent by the targeted users"
+      "Error: The message is empty, contains an embed, or is not sent by the targeted users"
     );
   }
 });
 
-client.login("BOT KEY HERE");
+client.login("BOT_TOKEN");
