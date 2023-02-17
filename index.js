@@ -42,6 +42,4 @@ client.on("message", (msg) => {
   }
 });
 
-client.login(
-  "BOT KEY HERE"
-);
+client.login("BOT KEY HERE");
